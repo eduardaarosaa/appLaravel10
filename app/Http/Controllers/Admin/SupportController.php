@@ -13,7 +13,12 @@ class SupportController extends Controller
     {
 
         $supports = $support->all();
-        return view('admin/supports/index' , compact($supports));
+        return view('admin/supports/index' , compact('supports'));
+    }
+
+    public function show(int $id)
+    {
+        dd($id);
     }
 
     public function create()
@@ -21,10 +26,18 @@ class SupportController extends Controller
         return view('admin/supports/create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request , Support $support)
     {
-        echo 'Cadastrar';
-        dd($request->all());
+
+        //metodo only - recupera apenas dados especificos
+        //ex: $request->only(['subject', 'body']);
+
+        $data = $request->all();
+        $data['status'] = 'a';
+
+        $support = $support->create($data);
+
+        return redirect()->route('supports.index');
 
     }
 }
