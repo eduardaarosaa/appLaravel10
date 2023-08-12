@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUpdateSupport;
 use App\Models\Support;
 use App\Models\User;
 use Illuminate\Http\Request;
+use function PHPUnit\Runner\validate;
 
 class SupportController extends Controller
 {
@@ -37,7 +38,7 @@ class SupportController extends Controller
         //metodo only - recupera apenas dados especificos
         //ex: $request->only(['subject', 'body']);
 
-        $data = $request->all();
+        $data = $request->validated();
         $data['status'] = 'a';
 
         $support = $support->create($data);
@@ -62,9 +63,7 @@ class SupportController extends Controller
             return back();
         }
 
-        $support->update($request->only([
-            'subject', 'body'
-        ]));
+        $support->update($request->validated());
 
         return redirect()->route('supports.index');
     }
