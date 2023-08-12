@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateSupport;
 use App\Models\Support;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class SupportController extends Controller
         return view('admin/supports/create');
     }
 
-    public function store(Request $request , Support $support)
+    public function store(StoreUpdateSupport $request , Support $support)
     {
 
         //metodo only - recupera apenas dados especificos
@@ -55,7 +56,7 @@ class SupportController extends Controller
         return view('admin/supports/edit', compact('support'));
     }
 
-    public function update(Request $request, Support $support, string $id)
+    public function update(StoreUpdateSupport $request, Support $support, string $id)
     {
         if(!$support = $support->where('id', $id)->first()){
             return back();
@@ -66,5 +67,17 @@ class SupportController extends Controller
         ]));
 
         return redirect()->route('supports.index');
+    }
+
+    public function destroy(Support $support, int $id)
+    {
+        if(!$support = $support->where('id', $id)->first()){
+            return back();
+        }
+
+        $support->delete();
+
+        return redirect()->route('supports.index');
+
     }
 }
