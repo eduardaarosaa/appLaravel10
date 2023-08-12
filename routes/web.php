@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/supports/{id}/edit', [SupportController::class, 'edit'])->name('supports.edit');
+Route::get('/supports/{id}/edit', [SupportController::class, 'edit'])->name('supports.edit');
 Route::get('/supports/create', [SupportController::class, 'create'])->name('supports.create');
 Route::get('/supports/{id}', [SupportController::class, 'show'])->name('supports.show');
 Route::post('/supports', [SupportController::class, 'store'])->name('supports.store');
